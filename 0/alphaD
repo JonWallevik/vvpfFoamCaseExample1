@@ -1,0 +1,56 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.1.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      alphaD;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+dimensions      [0 0 0 0 0 0 0];
+
+// #include "../constant/transportProperties"
+// internalField   uniform $PHASE1.alphaDMINscalar;
+
+internalField   uniform 0;
+
+boundaryField
+{
+    outerBoundaryWall
+    {
+        // type            zeroGradient;
+        // ---------------------------------
+        #include "../constant/transportProperties"
+        type            fixedValue;
+        value           uniform $PHASE1.alphaDMINscalar;
+        // value           uniform 0;
+    }
+
+    bottomBoundaryFloor
+    {
+        $outerBoundaryWall;
+    }
+
+    rodPillarSystem
+    {
+        $outerBoundaryWall;
+    }
+
+    atmosphere
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+    }
+}
+
+// ************************************************************************* //
