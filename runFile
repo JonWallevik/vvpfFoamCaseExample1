@@ -1,0 +1,45 @@
+#!/bin/sh
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   blockMesh running... " && \
+blockMesh > blockMesh.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   refineWallLayer running (0.5)... " && \
+refineWallLayer outerBoundaryWall 0.5 -overwrite > outerBoundaryWall.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+echo "   refineWallLayer running (0.5)... " && \
+refineWallLayer rodPillarSystem 0.5 -overwrite > rodPillarSystem.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+echo "   refineWallLayer running (0.5)... " && \
+refineWallLayer bottomBoundaryFloor 0.5 -overwrite > bottomBoundaryFloor.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   setFields running... " && \
+setFields > setFields.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   renumberMesh running... " && \
+renumberMesh -overwrite > renumberMesh.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   checkMesh running... " && \
+checkMesh > checkMesh.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   decomposePar running... " && \
+decomposePar > decomposePar.log 2>&1 && \
+echo "   ...done! " && \
+echo " ----------------------------------------------------- "
+# ----------------------------------------------------------------------------
+echo "   solver running... " && \
+nohup mpirun -np 6 vvpfFoam -parallel > log.txt &
+# ----------------------------------------------------------------------------
+
