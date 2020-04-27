@@ -1,0 +1,62 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.0.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// The current setup is read by transportProperties.H and is designed for
+// the rheological model "viscous_5", which is defined in apparentViscosity.H.
+// There are other viscosity models available in apparentViscosity.H. The
+// case below is just an example how to the parameter read works.
+
+PHASE1
+{
+    // Density of the continuous- and the dispersed phases:
+    rhoContinous          rhoContinous        [1 -3 0 0 0 0 0]   2200.0;
+    rhoDispersed          rhoDispersed        [1 -3 0 0 0 0 0]   2700.0;
+
+    // Characteristic particle diameter of the dispersed phase:
+    Da                    Da                  [0 1 0 0 0 0 0]    0.013;
+
+    // Max, min and start volume fraction of the dispersed phase:
+    alphaDMAX             alphaDMAX           [0 0 0 0 0 0 0]    0.4;
+    alphaDMIN             alphaDMIN           [0 0 0 0 0 0 0]    0.0;
+    // The following are used in ../0/alphaD and ../system/setFieldsDict:
+    alphaDMINscalar 0.0;  // = alphaDMIN; 
+    alphaDSTART 0.2;      // = Initial value;
+
+    // Rheological values (in [Pa.s], [Pa] and [1/s]):
+    RHEOLOGY
+    {
+        mu                mu                  [1 -1 -1 0 0 0 0]  50.0;
+        tau0              tau0                [1 -1 -2 0 0 0 0]  10.0;
+        delta             delta               [0  0 -1 0 0 0 0]  0.004;
+    }
+}
+
+// Phase 2 properties (e.g. atmospheric air 1.46e-05*1.22 = 1.7812e-05):
+PHASE2
+{
+    mu                    mu                  [1 -1 -1 0 0 0 0]  1.7812e-05;
+    rho                   rho                 [1 -3  0 0 0 0 0]  1.2200;
+}
+
+// Surface tension between phases 1 and 2:
+sigma                     sigma               [1 0 -2 0 0 0 0]   0.07;
+
+// For single reference frame (SRF) calculations (in [rad/s]):
+omega                     omega               [0 0 -1 0 0 0 0]   1.00;
+negativeOmega  -1.00; // = -omega (To be used in ./0/U)
+
+// ************************************************************************* //
