@@ -1,0 +1,57 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     vvpfFoam;
+
+startFrom       startTime; // latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         30.0;
+
+deltaT          0.001;
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.1;
+
+purgeWrite      0;
+
+writeFormat     ascii; // binary;
+
+writePrecision  6;
+
+writeCompression uncompressed; // compressed;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable no; // yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.05;
+maxAlpha1Co     0.05;
+maxAlphaDCo     0.05;
+
+maxDeltaT       $deltaT;
+
+
+// ************************************************************************* //
